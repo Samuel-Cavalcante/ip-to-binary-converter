@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP to Binary Converter</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="./imgs/logo-img.png" type="image/icon type">
+</head>
+
+<body>
+    <div class="header" id="myHeader">
+        <a>IP To Binary Converter</a>
+    </div>
+    <div id="container">
+        <div class="content">
+
+            <div class="title">
+                <h1>Internet Protocol</h1>
+            </div>
+
+            <form class="form">
+                <input type="number" id="a">
+                <input type="number" id="b">
+                <input type="number" id="c">
+                <input type="number" id="d">
+            </form>
+
+            <button id="convert-btn" onClick="convert()">Convert IP address to Binary</button>
+        </div>
+        <div id="result" class="result">
+
+        </div>
+    </div>
+
+    <script>
+
+        function convert() {
+
+            let a = document.getElementById('a').value;
+            let b = document.getElementById('b').value;
+            let c = document.getElementById('c').value;
+            let d = document.getElementById('d').value;
+
+            const constIp = `${a}.${b}.${c}.${d}`
+
+            if (a >= 0 && b >= 0 && c >= 0 && d >= 0) {
+                if (a <= 255 && b <= 255 && c <= 255 && d <= 255) {
+                    if (a.length > 0 && b.length > 0 && c.length > 0 && d.length > 0) {
+                        var checked = true
+                    }
+                }
+            }
+
+            if (checked) {
+
+                let ip = [a, b, c, d]
+
+                const bits = [128, 64, 32, 16, 8, 4, 2, 1]
+
+                let result = []
+
+                for (let i = 0; i < ip.length; i++) {
+
+                    for (let j = 0; j < bits.length; j++) {
+
+                        if (ip[i] - bits[j] >= 0) {
+
+                            ip[i] = ip[i] - bits[j]
+                            result = result + 1
+
+                        } else {
+                            result = result + 0
+                        }
+
+                        if (i != 3 && j == 7) {
+                            result = result + "."
+                        }
+                    }
+                }
+                // Cleaning the div before put a new Result.
+                document.getElementById("result").innerHTML = "";
+
+                const divResult = document.getElementById("result");
+
+                const ipResult = `<h2>IP: ${constIp}</h2>`
+                divResult.insertAdjacentHTML("beforeend", ipResult)
+
+                const strResult = `<h2>Binary: ${result}</h2>`
+                divResult.insertAdjacentHTML("beforeend", strResult)
+
+                console.log("IP: " + constIp)
+                console.log("Valor em binário: " + result)
+
+            } else {
+                const errMsg = "Erro! \n"
+                switch (true) {
+                    case a > 255:
+                        alert(errMsg + "O Primeiro valor é maior que 255")
+                        break;
+                    case b > 255:
+                        alert(errMsg + "O Segundo valor é maior que 255")
+                        break;
+                    case c > 255:
+                        alert(errMsg + "O Terceiro valor é maior que 255")
+                        break;
+                    case d > 255:
+                        alert(errMsg + "O Quarto valor é maior que 255")
+                        break;
+                    case a < 0:
+                        alert(errMsg + "O Primeiro valor é menor que 0")
+                        break;
+                    case b < 0:
+                        alert(errMsg + "O Segundo valor é menor que 0")
+                        break;
+                    case c < 0:
+                        alert(errMsg + "O Terceiro valor é menor que 0")
+                        break;
+                    case d < 0:
+                        alert(errMsg + "O Quarto valor é menor que 0")
+                        break;
+                    default:
+                        alert(errMsg + "Todos os campos devem ser preenchidos")
+                        break;
+                }
+            }
+        }
+
+    </script>
+
+</html>
